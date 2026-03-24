@@ -2,6 +2,6 @@
 require('lspconfig').tsserver.setup {}
 
 -- Ruby
-require("lspconfig").solargraph.setup({
-  filetypes = { "ruby", "eruby" },
-})
+require('lspconfig').solargraph.setup {
+  filetypes = { 'ruby' },
+}
