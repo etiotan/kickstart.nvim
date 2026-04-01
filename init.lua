@@ -118,6 +118,9 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
+vim.keymap.set('n', '<C-t>', ':tabnew<CR>', { desc = 'New Tab' })
+vim.keymap.set('n', '<C-q>', ':tabclose<CR>', { desc = 'Close Tab' })
+
 -- Enable break indent
 vim.o.breakindent = true
 
