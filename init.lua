@@ -248,6 +248,7 @@ rtp:prepend(lazypath)
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
+--
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
@@ -755,10 +756,7 @@ require('lazy').setup({
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = true, cpp = true, ruby = true } -- added ruby here
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
@@ -770,13 +768,17 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true }, -- added for .jsx
+        typescript = { 'prettierd', 'prettier', stop_after_first = true }, -- added for .ts
+        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true }, -- added for .tsx
         ruby = { 'rubocop' },
         eruby = { 'htmlbeautifier' },
+      },
+      formatters = {
+        rubocop = {
+          timeout_ms = 10000, -- increased from default 500ms to 10s
+        },
       },
     },
   },
@@ -944,6 +946,7 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
     build = ':TSUpdate',
     main = 'nvim-treesitter.config', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
